@@ -1,12 +1,13 @@
 package org.krishna.advance.dynamicCURDOperation;
 
-import java.sql.Connection;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TestInsert {
+public class TestSelect {
 
 	public static void main(String[] args) {
 		try {
@@ -15,14 +16,18 @@ public class TestInsert {
 			String user="root";
 			String pass="root";
 			Connection connection =DriverManager.getConnection(url,user,pass);
-			String query="INSERT INTO student VALUES (?,?,?,?)";
+			String query="SELECT * FROM student";
 			PreparedStatement ps= connection.prepareStatement(query);
-			ps.setInt(1,101);
-			ps.setString(2, "Raman");
-			ps.setString(3, "MVC");
-			ps.setString(4, "rama@2gmail.com");
-			int res=ps.executeUpdate();
-			System.out.println(res);
+			ResultSet resultSet=ps.executeQuery();
+			System.out.println(resultSet);
+			while(resultSet.next()) {
+				System.out.println(resultSet.getInt(1));
+				System.out.println(resultSet.getString(2));
+				System.out.println(resultSet.getString(3));
+				System.out.println(resultSet.getString(4));
+				System.out.println("------------------");
+			}
+
 			connection.close();
 		} catch (ClassNotFoundException | SQLException e) {
 			
@@ -31,4 +36,4 @@ public class TestInsert {
 
 	}
 
-}
+	}
